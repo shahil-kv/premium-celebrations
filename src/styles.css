@@ -29,6 +29,7 @@
   --font-display: "Playfair Display", serif;
   --font-body: "Lora", serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-arabic: "Amiri", serif;
   --color-blush: var(--blush);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -186,6 +187,27 @@
   }
 }
 
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 28%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 18px color-mix(in oklab, var(--accent) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 0%, transparent);
+  }
+}
+
+@keyframes float-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+
 @utility ornament-line {
   transform-origin: center;
   animation: draw-line 1.4s cubic-bezier(0.19, 1, 0.22, 1) both;
@@ -197,6 +219,35 @@
 
 @utility soft-in {
   animation: soft-fade 1.2s ease-out both;
+}
+
+@utility pulse-ring {
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+@utility float-slow {
+  animation: float-y 2.6s ease-in-out infinite alternate;
+}
+
+@utility arch-frame {
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+@utility door-grain {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--accent) 9%, transparent) 0 1px,
+      transparent 1px 14px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in oklab, var(--accent) 6%, transparent) 0 1px,
+      transparent 1px 14px
+    );
 }
 
 @utility grain-dots {

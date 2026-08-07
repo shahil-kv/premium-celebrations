@@ -17,12 +17,18 @@ export const wedding = {
   dateLabel: "Saturday, 22nd August 2026",
   timeLabel: "12:00 PM to 3:00 PM",
   nikkahDate: "27th December 2025",
+  // Digits only, with country code — used for the RSVP button
+  whatsapp: "919999999999",
   venue: {
     name: "North View Auditorium",
     address: "Paymbra, Kuruvattoor, Kerala 673571",
     mapsQuery: "North View Auditorium, Paymbra, Kuruvattoor, Kerala 673571",
   },
 } as const;
+
+export const whatsappUrl = `https://wa.me/${wedding.whatsapp}?text=${encodeURIComponent(
+  `Assalamu Alaikum! We'd love to join the walima of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel}.`,
+)}`;
 
 export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   wedding.venue.mapsQuery,
