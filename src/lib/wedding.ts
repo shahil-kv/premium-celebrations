@@ -1,38 +1,36 @@
 // Edit this file to personalise the invitation.
 export const wedding = {
   groom: {
-    name: "Ali Shameem",
-    parents: "Son of Mr. Ali V & Mrs. Nafeesa",
-    note: "",
+    name: "Rahoof",
+    parents: "Son of Abdul Rasheed & Raihanath",
+    address: "Edakkuni",
   },
   bride: {
-    name: "Fathima Fahima",
-    parents: "Daughter of Mr. Muhammed Musthafa & Mrs. Fousiya B",
-    note: "",
+    name: "Fida",
+    parents: "Daughter of Razak & Rahmath",
+    address: "Cholakkunnummal",
   },
-  initials: "A & F",
-  hashtag: "#AliShameemWedsFathimaFahima",
+  initials: "R & F",
+  hashtag: "#RahoofWedsFida",
+  hostedBy: "bride" as "bride" | "groom",
   // ISO date of the reception
-  date: "2026-08-22T12:00:00+05:30",
-  dateLabel: "Saturday, 22nd August 2026",
-  timeLabel: "12:00 PM to 3:00 PM",
-  nikkahDate: "27th December 2025",
+  date: "2026-08-30T11:00:00+05:30",
+  dateLabel: "Sunday, 30th August 2026",
+  timeLabel: "11:00 AM to 2:00 PM",
   // Digits only, with country code — used for the RSVP button
   whatsapp: "919999999999",
   venue: {
-    name: "North View Auditorium",
-    address: "Paymbra, Kuruvattoor, Kerala 673571",
-    mapsQuery: "North View Auditorium, Paymbra, Kuruvattoor, Kerala 673571",
+    name: "Andona Convention Center",
+    address: "Andona, Thamarassery, Kerala",
+    mapsLink: "https://maps.app.goo.gl/mn9TuNVFP2NMzkkQ9",
   },
 } as const;
 
 export const whatsappUrl = `https://wa.me/${wedding.whatsapp}?text=${encodeURIComponent(
-  `Assalamu Alaikum! We'd love to join the walima of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel}.`,
+  `Assalamu Alaikum! We'd love to join the wedding of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel}.`,
 )}`;
 
-export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  wedding.venue.mapsQuery,
-)}`;
+export const mapsUrl = wedding.venue.mapsLink;
 
 function toIcsStamp(iso: string) {
   return new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -45,7 +43,7 @@ export function calendarUrl() {
     action: "TEMPLATE",
     text: `Wedding — ${wedding.groom.name} & ${wedding.bride.name}`,
     dates: `${start}/${end}`,
-    details: "Walima — the wedding feast. In sha Allah.",
+    details: "Wedding reception. In sha Allah.",
     location: `${wedding.venue.name}, ${wedding.venue.address}`,
   });
   return `https://www.google.com/calendar/render?${params.toString()}`;
