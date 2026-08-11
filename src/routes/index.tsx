@@ -1,24 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-import { Cover } from "@/components/wedding/Cover";
 import { Countdown } from "@/components/wedding/Countdown";
 import { Ornament } from "@/components/wedding/Ornament";
 import { Reveal } from "@/components/wedding/Reveal";
+import { ScrollCue } from "@/components/wedding/ScrollCue";
 import { wedding, mapsUrl, calendarUrl, whatsappUrl } from "@/lib/wedding";
 
-import groomImg from "@/assets/groom.jpg";
-import brideImg from "@/assets/bride.jpg";
 import venueImg from "@/assets/venue.jpg";
-import memory1 from "@/assets/memory-1.jpg";
-import memory2 from "@/assets/memory-2.jpg";
-import memory3 from "@/assets/memory-3.jpg";
-import memory4 from "@/assets/memory-4.jpg";
-import memory5 from "@/assets/memory-5.jpg";
-import memory6 from "@/assets/memory-6.jpg";
 
 const title = `${wedding.groom.name} & ${wedding.bride.name} — Wedding Invitation`;
-const description = `Join us for the walima of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel} at ${wedding.venue.name}, ${wedding.venue.address}.`;
+const description = `Join us for the wedding of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel} at ${wedding.venue.name}, ${wedding.venue.address}.`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,17 +30,7 @@ const sections = [
   ["Home", "home"],
   ["Couple", "couple"],
   ["Event", "event"],
-  ["Nikkah", "nikkah"],
-  ["Memories", "memories"],
-] as const;
-
-const memories = [
-  { src: memory5, alt: "The nikkah ceremony hall", title: "The Sacred Moment", note: "Qubool Hai — Acceptance", span: "md:col-span-8", ratio: "aspect-video" },
-  { src: memory4, alt: "Exchange of rings", title: "Blessed Union", note: wedding.nikkahDate, span: "md:col-span-4 md:mt-16", ratio: "aspect-[3/4]" },
-  { src: memory2, alt: "Mehr ceremony details", title: "Mehr Ceremony", note: "The blessed gift", span: "md:col-span-4 md:-mt-10", ratio: "aspect-[3/4]" },
-  { src: memory6, alt: "Quran and prayer beads", title: "Duʿā", note: "Prayers for the couple", span: "md:col-span-4", ratio: "aspect-[3/4]" },
-  { src: memory3, alt: "Decor and ambiance", title: "Decor & Ambiance", note: "Beautiful arrangements", span: "md:col-span-4 md:mt-16", ratio: "aspect-[3/4]" },
-  { src: memory1, alt: "Together forever", title: "Together Forever", note: "In sha Allah — by Allah's will", span: "md:col-span-8 md:-mt-10", ratio: "aspect-video" },
+  ["Venue", "venue"],
 ] as const;
 
 function PillNav() {
@@ -72,8 +54,8 @@ function PillNav() {
   }, []);
 
   return (
-    <nav className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 soft-in [animation-delay:1.4s]">
-      <div className="flex items-center justify-between gap-0.5 rounded-full border border-accent/15 bg-card/85 px-2 py-2 shadow-xl shadow-foreground/5 backdrop-blur-md">
+    <nav className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 soft-in [animation-delay:0.8s]">
+      <div className="flex items-center justify-between gap-0.5 rounded-full border border-accent/20 bg-card/85 px-2 py-2 shadow-xl shadow-foreground/5 backdrop-blur-md">
         {sections.map(([label, id]) => (
           <a
             key={id}
@@ -100,10 +82,38 @@ function Eyebrow({ ar, en }: { ar: string; en: string }) {
   );
 }
 
+function Person({
+  side,
+  name,
+  parents,
+  address,
+  delay = 0,
+}: {
+  side: string;
+  name: string;
+  parents: string;
+  address: string;
+  delay?: number;
+}) {
+  return (
+    <Reveal delay={delay} className="space-y-4">
+      <div className="relative rounded-3xl border border-accent/20 bg-card/70 px-8 py-12 shadow-[0_24px_60px_-40px_color-mix(in_oklab,var(--accent)_60%,transparent)]">
+        <div className="pointer-events-none absolute inset-3 rounded-2xl border border-accent/12" />
+        <p className="font-mono text-[9px] tracking-[0.3em] text-accent uppercase">{side}</p>
+        <h3 className="font-display mt-4 text-3xl italic md:text-4xl">{name}</h3>
+        <Ornament className="my-5" />
+        <p className="text-sm text-muted-foreground italic">{parents}</p>
+        <p className="mt-2 font-mono text-[9px] tracking-[0.2em] text-muted-foreground/80 uppercase">
+          {address}
+        </p>
+      </div>
+    </Reveal>
+  );
+}
+
 function Invitation() {
   return (
     <main className="font-body bg-background text-foreground">
-      <Cover />
       <PillNav />
 
       {/* Hero */}
@@ -126,11 +136,11 @@ function Invitation() {
             {wedding.groom.name} &amp; {wedding.bride.name}
           </h1>
           <Ornament className="mb-6" />
-          <p className="font-display mb-10 text-lg italic md:text-xl">{wedding.dateLabel}</p>
-          <div className="mx-auto mb-6 h-20 w-px bg-accent/30" />
-          <p className="font-mono text-[10px] tracking-widest text-muted-foreground float-slow">
-            SCROLL TO UNFOLD
+          <p className="font-display mb-3 text-lg italic md:text-xl">{wedding.dateLabel}</p>
+          <p className="mb-10 font-mono text-[10px] tracking-[0.25em] text-muted-foreground uppercase">
+            {wedding.timeLabel} &middot; {wedding.venue.name}
           </p>
+          <ScrollCue />
         </div>
       </section>
 
@@ -157,40 +167,27 @@ function Invitation() {
       <section id="couple" className="mx-auto max-w-screen-md scroll-mt-24 px-6 py-20 text-center">
         <Reveal>
           <Eyebrow ar="العروسان" en="The Blessed Couple" />
+          <p className="mx-auto mb-12 max-w-[46ch] text-sm leading-loose text-muted-foreground">
+            With hearts full of gratitude, the family of the{" "}
+            {wedding.hostedBy === "bride" ? "bride" : "groom"} warmly invites you and your family to
+            share in this blessed occasion.
+          </p>
         </Reveal>
 
-        <div className="mt-14 mb-24 grid gap-14 md:grid-cols-2">
-          <Reveal className="space-y-5">
-            <div className="group overflow-hidden arch-frame border border-accent/15 p-2">
-              <img
-                src={groomImg}
-                alt={`Portrait of ${wedding.groom.name}`}
-                width={800}
-                height={1000}
-                loading="lazy"
-                className="aspect-[4/5] w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05]"
-              />
-            </div>
-            <p className="font-mono text-[9px] tracking-[0.3em] text-accent uppercase">The Groom</p>
-            <h3 className="font-display text-2xl italic">{wedding.groom.name}</h3>
-            <p className="text-sm text-muted-foreground italic">{wedding.groom.parents}</p>
-          </Reveal>
-
-          <Reveal delay={150} className="space-y-5 md:mt-14">
-            <div className="group overflow-hidden arch-frame border border-accent/15 p-2">
-              <img
-                src={brideImg}
-                alt={`Portrait of ${wedding.bride.name}`}
-                width={800}
-                height={1000}
-                loading="lazy"
-                className="aspect-[4/5] w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05]"
-              />
-            </div>
-            <p className="font-mono text-[9px] tracking-[0.3em] text-accent uppercase">The Bride</p>
-            <h3 className="font-display text-2xl italic">{wedding.bride.name}</h3>
-            <p className="text-sm text-muted-foreground italic">{wedding.bride.parents}</p>
-          </Reveal>
+        <div className="mb-24 grid gap-8 md:grid-cols-2">
+          <Person
+            side="The Groom"
+            name={wedding.groom.name}
+            parents={wedding.groom.parents}
+            address={wedding.groom.address}
+          />
+          <Person
+            side="The Bride"
+            name={wedding.bride.name}
+            parents={wedding.bride.parents}
+            address={wedding.bride.address}
+            delay={150}
+          />
         </div>
 
         <Reveal>
@@ -205,7 +202,7 @@ function Invitation() {
           <Reveal>
             <Eyebrow ar="تفاصيل الحفل" en="Wedding Ceremony" />
           </Reveal>
-          <div className="mt-14 grid items-center gap-12 md:grid-cols-2">
+          <div id="venue" className="mt-14 grid scroll-mt-24 items-center gap-12 md:grid-cols-2">
             <Reveal className="space-y-6 text-left">
               <div>
                 <span className="inline-block rounded-full border border-accent/25 px-3 py-1 font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
@@ -275,44 +272,6 @@ function Invitation() {
         </div>
       </section>
 
-      {/* Nikkah */}
-      <section id="nikkah" className="mx-auto max-w-screen-md scroll-mt-24 px-6 py-24 text-center">
-        <Reveal>
-          <Eyebrow ar="ذكريات النكاح" en="Nikkah Memories" />
-          <p className="mx-auto mt-10 max-w-[54ch] text-sm leading-loose text-muted-foreground">
-            Alhamdulillah — our Nikkah was solemnized on {wedding.nikkahDate}. Here are some
-            cherished moments from that blessed ceremony. May Allah bless this union and fill our
-            lives with love and barakah. Ameen.
-          </p>
-        </Reveal>
-      </section>
-
-      {/* Memories */}
-      <section id="memories" className="mx-auto max-w-screen-xl scroll-mt-24 px-6 pb-28">
-        <div className="grid grid-cols-12 gap-4 md:gap-6">
-          {memories.map((m, i) => (
-            <Reveal key={m.title} delay={(i % 3) * 120} className={`col-span-12 ${m.span}`}>
-              <figure className="group">
-                <div className="overflow-hidden rounded-sm">
-                  <img
-                    src={m.src}
-                    alt={m.alt}
-                    loading="lazy"
-                    className={`w-full object-cover ${m.ratio} transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.06]`}
-                  />
-                </div>
-                <figcaption className="mt-4">
-                  <p className="font-display text-lg italic">{m.title}</p>
-                  <p className="mt-1 font-mono text-[9px] tracking-[0.2em] text-muted-foreground uppercase">
-                    {m.note}
-                  </p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       {/* Dua footer */}
       <footer className="border-t border-border bg-blush/50 py-24 text-center">
         <div className="mx-auto max-w-screen-sm px-6">
@@ -344,7 +303,7 @@ function Invitation() {
         href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
-        className="fixed right-4 bottom-24 z-50 flex items-center gap-2 rounded-full border border-accent/25 bg-card/90 px-4 py-3 font-mono text-[9px] tracking-[0.2em] text-accent uppercase shadow-lg shadow-foreground/5 backdrop-blur-md transition-transform duration-300 hover:scale-105 soft-in [animation-delay:1.6s]"
+        className="fixed right-4 bottom-24 z-50 flex items-center gap-2 rounded-full border border-accent/25 bg-card/90 px-4 py-3 font-mono text-[9px] tracking-[0.2em] text-accent uppercase shadow-lg shadow-foreground/5 backdrop-blur-md transition-transform duration-300 hover:scale-105 soft-in [animation-delay:1s]"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.3-.9-2.8-1.2-4.5-4-4.6-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2 1.3 2.3 1.4.2.1.4.1.6-.1l.8-1c.2-.2.3-.2.6-.1l1.9.9c.3.1.5.2.6.3.1.2.1.7-.1 1.2Z" />
