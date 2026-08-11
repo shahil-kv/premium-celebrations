@@ -230,7 +230,6 @@
   animation: scroll-drop 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-
 @utility ornament-line {
   transform-origin: center;
   animation: draw-line 1.4s cubic-bezier(0.19, 1, 0.22, 1) both;
@@ -279,4 +278,124 @@
     transparent 0.5px
   );
   background-size: 24px 24px;
+}
+
+/* ── Ambient atmosphere ───────────────────────────────────────────────── */
+
+@keyframes drift-pattern {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-160px, -160px, 0);
+  }
+}
+
+@keyframes rise-dust {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(var(--sway, 0px), -102vh, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes draw-arch {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Positions stay within 0%–100% so the gradient always covers the text; the
+   highlight band itself sits off-canvas at either end of the sweep. Both ends
+   must be percentages — Chrome normalises a 0% keyframe to 0px and then refuses
+   to interpolate it against 100%. */
+@keyframes sheen {
+  0%,
+  62% {
+    background-position-x: 99.9%;
+  }
+  100% {
+    background-position-x: 0.1%;
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility drift-slow {
+  animation: drift-pattern 120s linear infinite;
+}
+
+@utility rise-dust {
+  animation-name: rise-dust;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@utility spin-slow {
+  animation: spin-slow 42s linear infinite;
+}
+
+/* Gold foil sweeping across the couple's names — the hero's one flourish. */
+@utility gold-sheen {
+  background-image: linear-gradient(
+    100deg,
+    var(--foreground) 0 40%,
+    color-mix(in oklab, var(--accent) 78%, white) 50%,
+    var(--foreground) 60% 100%
+  );
+  background-size: 260% 100%;
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.arch-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-arch 2.6s cubic-bezier(0.19, 1, 0.22, 1) 0.4s both;
+}
+
+/* The hero is staged behind the cover; hold every animation until it opens. */
+.stage-hold,
+.stage-hold * {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .gold-sheen {
+    background-image: none;
+    color: var(--foreground);
+  }
 }

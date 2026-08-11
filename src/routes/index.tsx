@@ -1,15 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+import { AmbientBackground } from "@/components/wedding/AmbientBackground";
+import { ArchDraw } from "@/components/wedding/ArchDraw";
+import { CornerFrame } from "@/components/wedding/CornerFrame";
 import { Cover } from "@/components/wedding/Cover";
 import { Countdown } from "@/components/wedding/Countdown";
 import { Ornament } from "@/components/wedding/Ornament";
 import { Reveal } from "@/components/wedding/Reveal";
 import { ScrollCue } from "@/components/wedding/ScrollCue";
+import { ScrollProgress } from "@/components/wedding/ScrollProgress";
 import { wedding, mapsUrl, calendarUrl, whatsappUrl } from "@/lib/wedding";
 
 import venueImg from "@/assets/venue.jpg";
-import coupleAsset from "@/assets/couple.jpg.asset.json";
+import coupleImg from "@/assets/bride.jpeg";
 
 const title = `${wedding.groom.name} & ${wedding.bride.name} — Wedding Invitation`;
 const description = `Join us for the wedding of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel} at ${wedding.venue.name}, ${wedding.venue.address}.`;
@@ -55,7 +59,7 @@ function PillNav() {
   }, []);
 
   return (
-    <nav className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 soft-in [animation-delay:0.8s]">
+    <nav className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 soft-in [animation-delay:1.4s]">
       <div className="flex items-center justify-between gap-0.5 rounded-full border border-accent/20 bg-card/85 px-2 py-2 shadow-xl shadow-foreground/5 backdrop-blur-md">
         {sections.map(([label, id]) => (
           <a
@@ -83,35 +87,6 @@ function Eyebrow({ ar, en }: { ar: string; en: string }) {
   );
 }
 
-function Person({
-  side,
-  name,
-  parents,
-  address,
-  delay = 0,
-}: {
-  side: string;
-  name: string;
-  parents: string;
-  address: string;
-  delay?: number;
-}) {
-  return (
-    <Reveal delay={delay} className="space-y-4">
-      <div className="relative rounded-3xl border border-accent/20 bg-card/70 px-8 py-12 shadow-[0_24px_60px_-40px_color-mix(in_oklab,var(--accent)_60%,transparent)]">
-        <div className="pointer-events-none absolute inset-3 rounded-2xl border border-accent/12" />
-        <p className="font-mono text-[9px] tracking-[0.3em] text-accent uppercase">{side}</p>
-        <h3 className="font-display mt-4 text-3xl italic md:text-4xl">{name}</h3>
-        <Ornament className="my-5" />
-        <p className="text-sm text-muted-foreground italic">{parents}</p>
-        <p className="mt-2 font-mono text-[9px] tracking-[0.2em] text-muted-foreground/80 uppercase">
-          {address}
-        </p>
-      </div>
-    </Reveal>
-  );
-}
-
 function Invitation() {
   const [opened, setOpened] = useState(false);
 
@@ -125,217 +100,233 @@ function Invitation() {
   return (
     <>
       {!opened && <Cover onOpen={() => setOpened(true)} />}
-    <main className="font-body bg-background text-foreground">
-      <PillNav />
 
-      {/* Hero */}
-      <section
-        id="home"
-        className="relative flex min-h-screen scroll-mt-24 flex-col items-center justify-center overflow-hidden bg-blush px-6 py-24 text-center"
-      >
-        <div className="pointer-events-none absolute inset-0 opacity-20 grain-dots" />
-        <div className="relative z-10 rise-in">
-          <p className="font-arabic mb-3 text-2xl text-accent md:text-3xl">
-            بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
-          </p>
-          <span className="mb-10 block font-mono text-[10px] tracking-[0.3em] text-accent/80 uppercase">
-            In the name of Allah, the Most Gracious, the Most Merciful
-          </span>
-          <p className="mb-4 font-mono text-[10px] tracking-[0.35em] text-muted-foreground uppercase">
-            Wedding Invitation
-          </p>
-          <h1 className="font-display mb-6 text-4xl tracking-tight text-balance italic md:text-7xl">
-            {wedding.groom.name} &amp; {wedding.bride.name}
-          </h1>
-          <Ornament className="mb-6" />
-          <p className="font-display mb-3 text-lg italic md:text-xl">{wedding.dateLabel}</p>
-          <p className="mb-10 font-mono text-[10px] tracking-[0.25em] text-muted-foreground uppercase">
-            {wedding.timeLabel} &middot; {wedding.venue.name}
-          </p>
-          <ScrollCue />
-        </div>
-      </section>
+      <AmbientBackground />
+      <CornerFrame />
+      <ScrollProgress />
 
-      {/* Ayah */}
-      <section className="mx-auto max-w-screen-md px-6 pt-24 pb-8 text-center">
-        <Reveal>
-          <p className="font-arabic mb-8 text-2xl leading-loose text-accent md:text-3xl">
-            وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا
-            وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
-          </p>
-          <p className="mx-auto mb-6 max-w-[50ch] text-base leading-relaxed text-pretty md:text-lg">
-            &ldquo;And among His signs is this, that He created for you mates from among yourselves,
-            that you may dwell in tranquility with them; and He has put love and mercy between your
-            hearts.&rdquo;
-          </p>
-          <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
-            Surah Ar-Rum (30:21)
-          </p>
-          <Ornament className="mt-12" />
-        </Reveal>
-      </section>
+      <main className="font-body relative z-10 text-foreground">
+        <PillNav />
 
-      {/* Couple */}
-      <section id="couple" className="mx-auto max-w-screen-md scroll-mt-24 px-6 py-20 text-center">
-        <Reveal>
-          <Eyebrow ar="العروسان" en="The Blessed Couple" />
-          <p className="mx-auto mb-12 max-w-[46ch] text-sm leading-loose text-muted-foreground">
-            With hearts full of gratitude, the family of the{" "}
-            {wedding.hostedBy === "bride" ? "bride" : "groom"} warmly invites you and your family to
-            share in this blessed occasion.
-          </p>
-        </Reveal>
+        {/* Hero */}
+        <section
+          id="home"
+          className={`relative flex min-h-screen scroll-mt-24 flex-col items-center justify-center overflow-hidden bg-blush/40 px-6 py-24 text-center ${
+            opened ? "" : "stage-hold"
+          }`}
+        >
+          <div className="relative flex flex-col items-center">
+            <ArchDraw />
 
-        <Reveal className="mb-14">
-          <figure className="group mx-auto max-w-md overflow-hidden arch-frame border border-accent/20 bg-card/70 p-2 shadow-[0_30px_70px_-50px_color-mix(in_oklab,var(--accent)_80%,transparent)]">
-            <img
-              src={coupleAsset.url}
-              alt={`${wedding.groom.name} and ${wedding.bride.name} together`}
-              width={900}
-              height={1200}
-              loading="lazy"
-              className="aspect-[3/4] w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04]"
-            />
-          </figure>
-        </Reveal>
-
-        <div className="mb-24 grid gap-8 md:grid-cols-2">
-          <Person
-            side="The Groom"
-            name={wedding.groom.name}
-            parents={wedding.groom.parents}
-            address={wedding.groom.address}
-          />
-          <Person
-            side="The Bride"
-            name={wedding.bride.name}
-            parents={wedding.bride.parents}
-            address={wedding.bride.address}
-            delay={150}
-          />
-        </div>
-
-        <Reveal>
-          <p className="font-arabic mb-6 text-xl text-accent/80">العد التنازلي</p>
-          <Countdown />
-        </Reveal>
-      </section>
-
-      {/* Event */}
-      <section id="event" className="scroll-mt-24 border-y border-border bg-card/50 py-24">
-        <div className="mx-auto max-w-screen-md px-6">
-          <Reveal>
-            <Eyebrow ar="تفاصيل الحفل" en="Wedding Ceremony" />
-          </Reveal>
-          <div id="venue" className="mt-14 grid scroll-mt-24 items-center gap-12 md:grid-cols-2">
-            <Reveal className="space-y-6 text-left">
-              <div>
-                <span className="inline-block rounded-full border border-accent/25 px-3 py-1 font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
-                  Upcoming
+            <div className="relative z-10 flex flex-col items-center">
+              <p className="font-arabic mb-3 text-2xl text-accent md:text-3xl rise-in [animation-delay:0.15s]">
+                بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+              </p>
+              <span className="mb-10 block font-mono text-[10px] leading-relaxed tracking-[0.3em] text-accent/80 uppercase rise-in [animation-delay:0.35s]">
+                In the name of Allah, the Most Gracious, the Most Merciful
+              </span>
+              <p className="mb-4 font-mono text-[10px] tracking-[0.35em] text-muted-foreground uppercase rise-in [animation-delay:0.55s]">
+                Wedding Invitation
+              </p>
+              <h1 className="font-display mb-6 text-4xl tracking-tight text-balance italic md:text-7xl rise-in [animation-delay:0.7s]">
+                <span className="gold-sheen [animation-delay:2.6s]">
+                  {wedding.groom.name} &amp; {wedding.bride.name}
                 </span>
-                <h3 className="font-display mt-4 text-3xl italic">Wedding Reception</h3>
-                <p className="mt-1 text-sm text-muted-foreground italic">
-                  وليمة — The Wedding Feast
-                </p>
+              </h1>
+              <Ornament className="mb-6 rise-in [animation-delay:0.95s]" />
+              <p className="font-display mb-3 text-lg italic md:text-xl rise-in [animation-delay:1.1s]">
+                {wedding.dateLabel}
+              </p>
+              <p className="mb-10 font-mono text-[10px] tracking-[0.25em] text-muted-foreground uppercase rise-in [animation-delay:1.25s]">
+                {wedding.timeLabel} &middot; {wedding.venue.name}
+              </p>
+              <div className="rise-in [animation-delay:1.55s]">
+                <ScrollCue />
               </div>
-              <dl className="space-y-4 text-sm">
-                <div>
-                  <dt className="font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
-                    Date
-                  </dt>
-                  <dd className="mt-1">{wedding.dateLabel}</dd>
-                </div>
-                <div>
-                  <dt className="font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
-                    Time
-                  </dt>
-                  <dd className="mt-1">{wedding.timeLabel}</dd>
-                </div>
-                <div>
-                  <dt className="font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
-                    Venue
-                  </dt>
-                  <dd className="mt-1 leading-relaxed">
-                    {wedding.venue.name}
-                    <br />
-                    {wedding.venue.address}
-                  </dd>
-                </div>
-              </dl>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full bg-foreground px-6 py-3 font-mono text-[10px] tracking-widest text-background uppercase transition-colors hover:bg-accent"
-                >
-                  Get Directions
-                </a>
-                <a
-                  href={calendarUrl()}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-border px-6 py-3 font-mono text-[10px] tracking-widest uppercase transition-colors hover:border-accent hover:text-accent"
-                >
-                  Add to Calendar
-                </a>
-              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Ayah */}
+        <section className="mx-auto max-w-screen-md px-6 pt-24 pb-8 text-center">
+          <Reveal>
+            <p className="font-arabic mb-8 text-2xl leading-loose text-accent md:text-3xl">
+              وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا
+              وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+            </p>
+            <p className="mx-auto mb-6 max-w-[50ch] text-base leading-relaxed text-pretty md:text-lg">
+              &ldquo;And among His signs is this, that He created for you mates from among
+              yourselves, that you may dwell in tranquility with them; and He has put love and mercy
+              between your hearts.&rdquo;
+            </p>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
+              Surah Ar-Rum (30:21)
+            </p>
+            <Ornament className="mt-12" />
+          </Reveal>
+        </section>
+
+        {/* Couple */}
+        <section
+          id="couple"
+          className="mx-auto max-w-screen-md scroll-mt-24 px-6 py-20 text-center"
+        >
+          <Reveal>
+            <Eyebrow ar="العروسان" en="The Blessed Couple" />
+            <p className="mx-auto mb-12 max-w-[46ch] text-sm leading-loose text-muted-foreground">
+              With hearts full of gratitude, the family of the{" "}
+              {wedding.hostedBy === "bride" ? "bride" : "groom"} warmly invites you and your family
+              to share in this blessed occasion.
+            </p>
+          </Reveal>
+
+          <Reveal className="mb-12">
+            <figure className="group mx-auto max-w-md overflow-hidden arch-frame border border-accent/20 bg-card/70 p-2 shadow-[0_30px_70px_-50px_color-mix(in_oklab,var(--accent)_80%,transparent)]">
+              <img
+                src={coupleImg}
+                alt={`${wedding.groom.name} and ${wedding.bride.name} together`}
+                width={900}
+                height={1200}
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04]"
+              />
+            </figure>
+          </Reveal>
+
+          <Reveal className="mb-20">
+            <p className="font-display text-2xl italic md:text-3xl">
+              {wedding.groom.name}
+              <span className="mx-3 text-accent not-italic">&amp;</span>
+              {wedding.bride.name}
+            </p>
+            <p className="mt-4 text-sm leading-loose text-muted-foreground italic">
+              {wedding.groom.parents}
+              <span className="mx-2 text-accent/50">·</span>
+              {wedding.groom.address}
+            </p>
+            <p className="text-sm leading-loose text-muted-foreground italic">
+              {wedding.bride.parents}
+              <span className="mx-2 text-accent/50">·</span>
+              {wedding.bride.address}
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <p className="font-arabic mb-6 text-xl text-accent/80">العد التنازلي</p>
+            <Countdown />
+          </Reveal>
+        </section>
+
+        {/* Event */}
+        <section id="event" className="scroll-mt-24 border-y border-border bg-card/45 py-24">
+          <div className="mx-auto max-w-screen-md px-6">
+            <Reveal>
+              <Eyebrow ar="تفاصيل الحفل" en="Wedding Ceremony" />
             </Reveal>
-            <Reveal delay={150}>
-              <div className="group overflow-hidden arch-frame border border-accent/15 p-2">
-                <img
-                  src={venueImg}
-                  alt={`${wedding.venue.name} venue`}
-                  width={800}
-                  height={800}
-                  loading="lazy"
-                  className="aspect-square w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05]"
-                />
+            <div id="venue" className="mt-14 grid scroll-mt-24 items-center gap-12 md:grid-cols-2">
+              <Reveal className="space-y-6 text-left">
+                <div>
+                  <span className="inline-block rounded-full border border-accent/25 px-3 py-1 font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
+                    Upcoming
+                  </span>
+                  <h3 className="font-display mt-4 text-3xl italic">Wedding Reception</h3>
+                  <p className="mt-1 text-sm text-muted-foreground italic">
+                    وليمة — The Wedding Feast
+                  </p>
+                </div>
+                <dl className="space-y-4 text-sm">
+                  <div>
+                    <dt className="font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
+                      Date
+                    </dt>
+                    <dd className="mt-1">{wedding.dateLabel}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
+                      Time
+                    </dt>
+                    <dd className="mt-1">{wedding.timeLabel}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-mono text-[9px] tracking-[0.25em] text-accent uppercase">
+                      Venue
+                    </dt>
+                    <dd className="mt-1 leading-relaxed">
+                      {wedding.venue.name}
+                      <br />
+                      {wedding.venue.address}
+                    </dd>
+                  </div>
+                </dl>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full bg-foreground px-6 py-3 font-mono text-[10px] tracking-widest text-background uppercase transition-colors hover:bg-accent"
+                  >
+                    Get Directions
+                  </a>
+                  <a
+                    href={calendarUrl()}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-border px-6 py-3 font-mono text-[10px] tracking-widest uppercase transition-colors hover:border-accent hover:text-accent"
+                  >
+                    Add to Calendar
+                  </a>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-border px-6 py-3 font-mono text-[10px] tracking-widest uppercase transition-colors hover:border-accent hover:text-accent"
+                  >
+                    Message Us
+                  </a>
+                </div>
+              </Reveal>
+              <Reveal delay={150}>
+                <div className="group overflow-hidden arch-frame border border-accent/15 p-2">
+                  <img
+                    src={venueImg}
+                    alt={`${wedding.venue.name} venue`}
+                    width={800}
+                    height={800}
+                    loading="lazy"
+                    className="aspect-square w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05]"
+                  />
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* Dua footer */}
+        <footer className="border-t border-border bg-blush/40 py-24 text-center">
+          <div className="mx-auto max-w-screen-sm px-6">
+            <Reveal>
+              <p className="font-arabic mb-6 text-2xl text-accent md:text-3xl">
+                جَزَاكُمُ اللَّهُ خَيْرًا
+              </p>
+              <p className="text-sm leading-loose text-muted-foreground italic">
+                May Allah reward you with goodness for joining us on our special day. Your presence
+                and heartfelt prayers are the greatest blessing we could ask for.
+              </p>
+              <Ornament className="my-10" />
+              <p className="font-display text-xl italic">
+                {wedding.groom.name} &amp; {wedding.bride.name}
+              </p>
+              <div className="mt-6 font-mono text-[10px] tracking-widest text-muted-foreground/70 uppercase">
+                {wedding.hashtag}
+              </div>
+              <div className="mt-2 font-mono text-[9px] tracking-widest text-muted-foreground/50">
+                Made with love &amp; duʿā
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* Dua footer */}
-      <footer className="border-t border-border bg-blush/50 py-24 text-center">
-        <div className="mx-auto max-w-screen-sm px-6">
-          <Reveal>
-            <p className="font-arabic mb-6 text-2xl text-accent md:text-3xl">
-              جَزَاكُمُ اللَّهُ خَيْرًا
-            </p>
-            <p className="text-sm leading-loose text-muted-foreground italic">
-              May Allah reward you with goodness for joining us on our special day. Your presence
-              and heartfelt prayers are the greatest blessing we could ask for.
-            </p>
-            <Ornament className="my-10" />
-            <p className="font-display text-xl italic">
-              {wedding.groom.name} &amp; {wedding.bride.name}
-            </p>
-            <div className="mt-6 font-mono text-[10px] tracking-widest text-muted-foreground/70 uppercase">
-              {wedding.hashtag}
-            </div>
-            <div className="mt-2 font-mono text-[9px] tracking-widest text-muted-foreground/50">
-              Made with love &amp; duʿā
-            </div>
-          </Reveal>
-        </div>
-        <div className="h-16" />
-      </footer>
-
-      {/* WhatsApp RSVP */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed right-4 bottom-24 z-50 flex items-center gap-2 rounded-full border border-accent/25 bg-card/90 px-4 py-3 font-mono text-[9px] tracking-[0.2em] text-accent uppercase shadow-lg shadow-foreground/5 backdrop-blur-md transition-transform duration-300 hover:scale-105 soft-in [animation-delay:1s]"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.3-.9-2.8-1.2-4.5-4-4.6-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2 1.3 2.3 1.4.2.1.4.1.6-.1l.8-1c.2-.2.3-.2.6-.1l1.9.9c.3.1.5.2.6.3.1.2.1.7-.1 1.2Z" />
-        </svg>
-        Reserve via WhatsApp
-      </a>
-    </main>
+          <div className="h-16" />
+        </footer>
+      </main>
     </>
   );
 }

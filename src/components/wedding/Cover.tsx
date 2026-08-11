@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { GeoPattern } from "@/components/wedding/GeoPattern";
 import { Ornament } from "@/components/wedding/Ornament";
 import { wedding } from "@/lib/wedding";
 
@@ -17,10 +18,14 @@ export function Cover({ onOpen }: { onOpen: () => void }) {
         leaving ? "pointer-events-none -translate-y-6 opacity-0" : "opacity-100"
       }`}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-25 grain-dots" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.06]">
+        <GeoPattern />
+      </div>
 
       <div className="relative z-10 w-full max-w-sm text-center rise-in">
-        <p className="font-arabic mb-2 text-2xl text-accent">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+        <p className="font-arabic mb-2 text-2xl text-accent">
+          بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+        </p>
         <p className="mb-8 font-mono text-[9px] tracking-[0.25em] text-muted-foreground uppercase">
           In the name of Allah, the Most Gracious, the Most Merciful
         </p>
@@ -28,18 +33,29 @@ export function Cover({ onOpen }: { onOpen: () => void }) {
         <div className="relative rounded-[2rem] border border-accent/25 bg-card/90 px-7 py-10 shadow-[0_30px_80px_-50px_color-mix(in_oklab,var(--accent)_80%,transparent)] backdrop-blur-sm">
           <div className="pointer-events-none absolute inset-3 rounded-[1.6rem] border border-accent/15" />
 
-          <span className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-accent/40 bg-blush float-slow">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="text-accent">
-              <path
-                d="M12 3.5 6 8v12h12V8l-6-4.5Z"
+          <span className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-accent/40 bg-blush float-slow">
+            <svg
+              width="34"
+              height="34"
+              viewBox="0 0 48 48"
+              fill="none"
+              className="text-accent/70 spin-slow"
+              aria-hidden="true"
+            >
+              <rect x="9" y="9" width="30" height="30" stroke="currentColor" strokeWidth="1" />
+              <rect
+                x="9"
+                y="9"
+                width="30"
+                height="30"
+                transform="rotate(45 24 24)"
                 stroke="currentColor"
-                strokeWidth="1.1"
-                strokeLinejoin="round"
+                strokeWidth="1"
               />
-              <path d="M12 3.5V1.5" stroke="currentColor" strokeWidth="1.1" />
-              <path d="M10 20v-4a2 2 0 1 1 4 0v4" stroke="currentColor" strokeWidth="1.1" />
-              <path d="M4 20h16" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
             </svg>
+            <span className="font-display absolute text-[13px] leading-none text-accent italic">
+              {wedding.initials}
+            </span>
           </span>
 
           <p className="font-arabic mb-2 text-xl text-accent">وَلِيمَةٌ مُبَارَكَة</p>
