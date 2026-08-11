@@ -1,6 +1,15 @@
-export function ScrollCue({ label = "Scroll to unfold" }: { label?: string }) {
+export function ScrollCue({
+  label = "Scroll to unfold",
+  href = "#couple",
+}: {
+  label?: string;
+  href?: string;
+}) {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <a
+      href={href}
+      className="group flex flex-col items-center gap-3 transition-opacity hover:opacity-80"
+    >
       <span className="font-mono text-[9px] tracking-[0.35em] text-muted-foreground uppercase">
         {label}
       </span>
@@ -17,6 +26,6 @@ export function ScrollCue({ label = "Scroll to unfold" }: { label?: string }) {
       >
         <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.2" />
       </svg>
-    </div>
+    </a>
   );
 }

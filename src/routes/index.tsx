@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+import { Cover } from "@/components/wedding/Cover";
 import { Countdown } from "@/components/wedding/Countdown";
 import { Ornament } from "@/components/wedding/Ornament";
 import { Reveal } from "@/components/wedding/Reveal";
@@ -8,6 +9,7 @@ import { ScrollCue } from "@/components/wedding/ScrollCue";
 import { wedding, mapsUrl, calendarUrl, whatsappUrl } from "@/lib/wedding";
 
 import venueImg from "@/assets/venue.jpg";
+import coupleAsset from "@/assets/couple.jpg.asset.json";
 
 const title = `${wedding.groom.name} & ${wedding.bride.name} — Wedding Invitation`;
 const description = `Join us for the wedding of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel} at ${wedding.venue.name}, ${wedding.venue.address}.`;
@@ -30,7 +32,6 @@ const sections = [
   ["Home", "home"],
   ["Couple", "couple"],
   ["Event", "event"],
-  ["Venue", "venue"],
 ] as const;
 
 function PillNav() {
@@ -112,7 +113,18 @@ function Person({
 }
 
 function Invitation() {
+  const [opened, setOpened] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = opened ? "" : "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [opened]);
+
   return (
+    <>
+      {!opened && <Cover onOpen={() => setOpened(true)} />}
     <main className="font-body bg-background text-foreground">
       <PillNav />
 
@@ -172,6 +184,19 @@ function Invitation() {
             {wedding.hostedBy === "bride" ? "bride" : "groom"} warmly invites you and your family to
             share in this blessed occasion.
           </p>
+        </Reveal>
+
+        <Reveal className="mb-14">
+          <figure className="group mx-auto max-w-md overflow-hidden arch-frame border border-accent/20 bg-card/70 p-2 shadow-[0_30px_70px_-50px_color-mix(in_oklab,var(--accent)_80%,transparent)]">
+            <img
+              src={coupleAsset.url}
+              alt={`${wedding.groom.name} and ${wedding.bride.name} together`}
+              width={900}
+              height={1200}
+              loading="lazy"
+              className="aspect-[3/4] w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04]"
+            />
+          </figure>
         </Reveal>
 
         <div className="mb-24 grid gap-8 md:grid-cols-2">
@@ -311,5 +336,6 @@ function Invitation() {
         Reserve via WhatsApp
       </a>
     </main>
+    </>
   );
 }
