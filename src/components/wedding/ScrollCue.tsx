@@ -14,7 +14,7 @@ export function ScrollCue({
         {label}
       </span>
       <span className="relative block h-16 w-px overflow-hidden bg-accent/20">
-        <span className="absolute inset-x-0 -top-6 block h-6 bg-gradient-to-b from-transparent via-accent to-transparent scroll-drop" />
+        <span className="absolute inset-x-0 top-0 block h-6 bg-gradient-to-b from-transparent via-accent to-transparent scroll-drop" />
       </span>
       <svg
         width="14"
