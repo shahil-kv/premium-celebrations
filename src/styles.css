@@ -296,11 +296,11 @@
     transform: translate3d(0, 0, 0) scale(0.5);
     opacity: 0;
   }
-  12% {
-    opacity: 0.9;
+  10% {
+    opacity: 1;
   }
   85% {
-    opacity: 0.55;
+    opacity: 0.75;
   }
   100% {
     transform: translate3d(var(--sway, 0px), -102vh, 0) scale(1);
@@ -323,7 +323,7 @@
    to interpolate it against 100%. */
 @keyframes sheen {
   0%,
-  62% {
+  38% {
     background-position-x: 99.9%;
   }
   100% {
@@ -356,9 +356,9 @@
 @utility gold-sheen {
   background-image: linear-gradient(
     100deg,
-    var(--foreground) 0 40%,
-    color-mix(in oklab, var(--accent) 78%, white) 50%,
-    var(--foreground) 60% 100%
+    var(--foreground) 0 38%,
+    color-mix(in oklab, var(--accent) 92%, white) 50%,
+    var(--foreground) 62% 100%
   );
   background-size: 260% 100%;
   background-position: 100% 0;
@@ -366,7 +366,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: sheen 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: sheen 4.2s cubic-bezier(0.45, 0, 0.25, 1) infinite;
 }
 
 .arch-stroke {

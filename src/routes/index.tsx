@@ -186,9 +186,11 @@ function Invitation() {
                 src={coupleImg}
                 alt={`${wedding.groom.name} and ${wedding.bride.name} together`}
                 width={900}
-                height={1200}
+                height={900}
                 loading="lazy"
-                className="aspect-[3/4] w-full object-cover arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04]"
+                /* Square frame sitting low in the photo: faces only glimpsed,
+                   and the photographer's watermark stays out of frame. */
+                className="aspect-square w-full object-cover object-[6%_1%] arch-frame transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04]"
               />
             </figure>
           </Reveal>
