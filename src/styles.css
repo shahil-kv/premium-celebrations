@@ -209,6 +209,28 @@
   }
 }
 
+@keyframes scroll-drop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(400%);
+    opacity: 0;
+  }
+}
+
+@utility scroll-drop {
+  animation: scroll-drop 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+
 @utility ornament-line {
   transform-origin: center;
   animation: draw-line 1.4s cubic-bezier(0.19, 1, 0.22, 1) both;
