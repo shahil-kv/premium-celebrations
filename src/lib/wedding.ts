@@ -2,13 +2,13 @@
 export const wedding = {
   groom: {
     name: "Rahoof",
-    parents: "Son of Abdul Rasheed & Raihanath",
-    address: "Edakkuni",
+    parents: "S/O Abdul Rasheed & Raihanath",
+    address: "Edakkuni, Karanthoor",
   },
   bride: {
     name: "Fida",
-    parents: "Daughter of Razak & Rahmath",
-    address: "Cholakkunnummal",
+    parents: "D/O Razak & Rahmath",
+    address: "Cholakkunnummal, Koduvally",
   },
   initials: "R & F",
   hashtag: "#RahoofWedsFida",

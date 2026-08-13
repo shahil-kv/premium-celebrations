@@ -1,13 +1,21 @@
 export function ScrollCue({
   label = "Scroll to unfold",
-  href = "#couple",
+  href = "#blessing",
 }: {
   label?: string;
   href?: string;
 }) {
+  /* Nudge down by a fraction of the viewport instead of jumping a whole
+     section — the anchor stays as the no-JS fallback. */
+  const nudge = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.scrollBy({ top: window.innerHeight * 1, behavior: "smooth" });
+  };
+
   return (
     <a
       href={href}
+      onClick={nudge}
       className="group flex flex-col items-center gap-3 transition-opacity hover:opacity-80"
     >
       <span className="font-mono text-[9px] tracking-[0.35em] text-muted-foreground uppercase">

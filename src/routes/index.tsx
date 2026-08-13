@@ -10,9 +10,9 @@ import { Ornament } from "@/components/wedding/Ornament";
 import { Reveal } from "@/components/wedding/Reveal";
 import { ScrollCue } from "@/components/wedding/ScrollCue";
 import { ScrollProgress } from "@/components/wedding/ScrollProgress";
-import { wedding, mapsUrl, calendarUrl, whatsappUrl } from "@/lib/wedding";
+import { wedding, mapsUrl, calendarUrl } from "@/lib/wedding";
 
-import venueImg from "@/assets/venue.jpg";
+import venueImg from "@/assets/weddingplace.jpeg";
 import coupleImg from "@/assets/bride.jpeg";
 
 const title = `${wedding.groom.name} & ${wedding.bride.name} — Wedding Invitation`;
@@ -119,10 +119,12 @@ function Invitation() {
             <ArchDraw />
 
             <div className="relative z-10 flex flex-col items-center">
-              <p className="font-arabic mb-3 text-2xl text-accent md:text-3xl rise-in [animation-delay:0.15s]">
+              {/* The basmala is pulled up on its own; the translation's larger
+                  bottom margin keeps everything below it exactly where it was. */}
+              <p className="font-arabic -mt-12 mb-3 text-2xl text-accent md:-mt-24 md:text-3xl rise-in [animation-delay:0.15s]">
                 بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
               </p>
-              <span className="mb-10 block font-mono text-[10px] leading-relaxed tracking-[0.3em] text-accent/80 uppercase rise-in [animation-delay:0.35s]">
+              <span className="mb-32 block font-mono text-[10px] leading-relaxed tracking-[0.3em] text-accent/80 uppercase md:mb-44 rise-in [animation-delay:0.35s]">
                 In the name of Allah, the Most Gracious, the Most Merciful
               </span>
               <p className="mb-4 font-mono text-[10px] tracking-[0.35em] text-muted-foreground uppercase rise-in [animation-delay:0.55s]">
@@ -137,8 +139,11 @@ function Invitation() {
               <p className="font-display mb-3 text-lg italic md:text-xl rise-in [animation-delay:1.1s]">
                 {wedding.dateLabel}
               </p>
-              <p className="mb-10 font-mono text-[10px] tracking-[0.25em] text-muted-foreground uppercase rise-in [animation-delay:1.25s]">
-                {wedding.timeLabel} &middot; {wedding.venue.name}
+              <p className="font-mono text-[10px] tracking-[0.25em] whitespace-nowrap text-muted-foreground uppercase rise-in [animation-delay:1.25s]">
+                {wedding.timeLabel}
+              </p>
+              <p className="mt-2 mb-10 font-mono text-[10px] tracking-[0.25em] text-muted-foreground uppercase rise-in [animation-delay:1.3s]">
+                {wedding.venue.name}
               </p>
               <div className="rise-in [animation-delay:1.55s]">
                 <ScrollCue />
@@ -148,7 +153,7 @@ function Invitation() {
         </section>
 
         {/* Ayah */}
-        <section className="mx-auto max-w-screen-md px-6 pt-24 pb-8 text-center">
+        <section id="blessing" className="mx-auto max-w-screen-md px-6 pt-24 pb-8 text-center">
           <Reveal>
             <p className="font-arabic mb-8 text-2xl leading-loose text-accent md:text-3xl">
               وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا
@@ -202,14 +207,10 @@ function Invitation() {
               {wedding.bride.name}
             </p>
             <p className="mt-4 text-sm leading-loose text-muted-foreground italic">
-              {wedding.groom.parents}
-              <span className="mx-2 text-accent/50">·</span>
-              {wedding.groom.address}
+              {wedding.groom.parents}, {wedding.groom.address}
             </p>
             <p className="text-sm leading-loose text-muted-foreground italic">
-              {wedding.bride.parents}
-              <span className="mx-2 text-accent/50">·</span>
-              {wedding.bride.address}
+              {wedding.bride.parents}, {wedding.bride.address}
             </p>
           </Reveal>
 
@@ -276,14 +277,6 @@ function Invitation() {
                     className="rounded-full border border-border px-6 py-3 font-mono text-[10px] tracking-widest uppercase transition-colors hover:border-accent hover:text-accent"
                   >
                     Add to Calendar
-                  </a>
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-border px-6 py-3 font-mono text-[10px] tracking-widest uppercase transition-colors hover:border-accent hover:text-accent"
-                  >
-                    Message Us
                   </a>
                 </div>
               </Reveal>
