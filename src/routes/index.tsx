@@ -10,24 +10,45 @@ import { Ornament } from "@/components/wedding/Ornament";
 import { Reveal } from "@/components/wedding/Reveal";
 import { ScrollCue } from "@/components/wedding/ScrollCue";
 import { ScrollProgress } from "@/components/wedding/ScrollProgress";
-import { wedding, mapsUrl, calendarUrl } from "@/lib/wedding";
+import { wedding, mapsUrl, calendarUrl, siteUrl, ogImageUrl } from "@/lib/wedding";
 
 import venueImg from "@/assets/weddingplace.jpeg";
 import coupleImg from "@/assets/bride.jpeg";
 
-const title = `${wedding.groom.name} & ${wedding.bride.name} — Wedding Invitation`;
-const description = `Join us for the wedding of ${wedding.groom.name} & ${wedding.bride.name} on ${wedding.dateLabel} at ${wedding.venue.name}, ${wedding.venue.address}.`;
+const title = `${wedding.groom.name} ❤️ ${wedding.bride.name} | Wedding Invitation`;
+const description = `We warmly invite you to celebrate our wedding on ${wedding.dateLabel} from ${wedding.timeLabel} at ${wedding.venue.name}.`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title },
       { name: "description", content: description },
+
+      /* WhatsApp only renders the large card when og:image is an absolute URL
+         with explicit dimensions; without it, it scrapes a page <img> and
+         falls back to the small thumbnail layout. */
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: siteUrl },
+      { property: "og:site_name", content: `${wedding.groom.name} & ${wedding.bride.name}` },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: ogImageUrl },
+      { property: "og:image:secure_url", content: ogImageUrl },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: `Wedding invitation for ${wedding.groom.name} and ${wedding.bride.name}`,
+      },
+
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+      { name: "twitter:image", content: ogImageUrl },
     ],
+    links: [{ rel: "canonical", href: siteUrl }],
   }),
   component: Invitation,
 });

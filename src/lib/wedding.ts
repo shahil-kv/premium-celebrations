@@ -1,4 +1,12 @@
 // Edit this file to personalise the invitation.
+
+/** Deployed origin, no trailing slash. Link previews (WhatsApp, iMessage,
+ *  Facebook) need absolute URLs, so this must match the live domain. */
+export const siteUrl = "https://premium-celebrations.vercel.app";
+
+/** Bump the ?v= when you replace the card so WhatsApp re-scrapes it. */
+export const ogImageUrl = `${siteUrl}/og-image.jpg?v=1`;
+
 export const wedding = {
   groom: {
     name: "Rahoof",
