@@ -5,7 +5,7 @@
 export const siteUrl = "https://premium-celebrations.vercel.app";
 
 /** Bump the ?v= when you replace the card so WhatsApp re-scrapes it. */
-export const ogImageUrl = `${siteUrl}/og-image.jpg?v=1`;
+export const ogImageUrl = `${siteUrl}/og-image.jpg?v=2`;
 
 export const wedding = {
   groom: {
@@ -19,7 +19,7 @@ export const wedding = {
     address: "Cholakkunnummal, Koduvally",
   },
   initials: "R & F",
-  hashtag: "#RahoofWedsFida",
+  hashtag: "#RahoofAndFida",
   hostedBy: "bride" as "bride" | "groom",
   // ISO date of the reception
   date: "2026-08-30T11:00:00+05:30",
@@ -28,7 +28,7 @@ export const wedding = {
   // Digits only, with country code — used for the RSVP button
   whatsapp: "919999999999",
   venue: {
-    name: "Andona Convention Center",
+    name: "Andona Convention Centre",
     address: "Andona, Thamarassery, Kerala",
     mapsLink: "https://maps.app.goo.gl/mn9TuNVFP2NMzkkQ9",
   },
@@ -41,7 +41,10 @@ export const whatsappUrl = `https://wa.me/${wedding.whatsapp}?text=${encodeURICo
 export const mapsUrl = wedding.venue.mapsLink;
 
 function toIcsStamp(iso: string) {
-  return new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  return new Date(iso)
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}/, "");
 }
 
 export function calendarUrl() {

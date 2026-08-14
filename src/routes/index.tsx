@@ -227,11 +227,17 @@ function Invitation() {
               <span className="mx-3 text-accent not-italic">&amp;</span>
               {wedding.bride.name}
             </p>
-            <p className="mt-4 text-sm leading-loose text-muted-foreground italic">
-              {wedding.groom.parents}, {wedding.groom.address}
+            {/* On phones each family reads as two lines with a gap between
+                them; from md up they collapse back to one line each. */}
+            <p className="mt-6 text-sm leading-loose text-muted-foreground italic md:mt-4">
+              {wedding.groom.parents}
+              <span className="hidden md:inline">, </span>
+              <span className="block md:inline">{wedding.groom.address}</span>
             </p>
-            <p className="text-sm leading-loose text-muted-foreground italic">
-              {wedding.bride.parents}, {wedding.bride.address}
+            <p className="mt-5 text-sm leading-loose text-muted-foreground italic md:mt-0">
+              {wedding.bride.parents}
+              <span className="hidden md:inline">, </span>
+              <span className="block md:inline">{wedding.bride.address}</span>
             </p>
           </Reveal>
 
